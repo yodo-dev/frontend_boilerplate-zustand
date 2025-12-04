@@ -7,7 +7,7 @@ import { loggedIn } from '@/redux/slices/authSlice';
 import { setAccessToken } from '@/utils/tokenMemory';
 import { validateLoginForm } from '@/utils/validationSchemas';
 import { Button, FormInput } from '@/components';
-import { useToastContext } from '@/components/Toast/ToastProvider';
+import { useToastContext } from '@/components/toast/ToastProvider';
 
 const Login: React.FC = () => {
   const [login, { isLoading }] = useLoginMutation();

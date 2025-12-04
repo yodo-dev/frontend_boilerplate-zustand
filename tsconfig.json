@@ -11,6 +11,7 @@
         "skipLibCheck": true,
         "jsx": "react-jsx",
         "strict": true,
+        "forceConsistentCasingInFileNames": true,
         "moduleResolution": "Bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
@@ -20,7 +21,9 @@
         ],
         "baseUrl": ".",
         "paths": {
-            "@/*": ["src/*"]
+            "@/*": [
+                "src/*"
+            ]
         }
     },
     "include": [

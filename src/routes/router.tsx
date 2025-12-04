@@ -1,19 +1,19 @@
 import React, { lazy } from 'react';
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
-import PublicLayout from '@/layouts/PublicLayout';
-import AdminLayout from '@/layouts/AdminLayout';
-import ProtectedRoute from '@/pages/Layout/ProtectedRoute';
+import PublicLayout from '@/layouts/publicLayout';
+import AdminLayout from '@/layouts/adminLayout';
+import ProtectedRoute from '@/pages/layout/ProtectedRoute';
 
-const HomePage = lazy(() => import('@/pages/Public/HomePage'));
-const AboutPage = lazy(() => import('@/pages/Public/AboutPage'));
-const ContactPage = lazy(() => import('@/pages/Public/ContactPage'));
-const Login = lazy(() => import('@/pages/Auth/Login'));
-const Register = lazy(() => import('@/pages/Auth/Register'));
-const ForgetPassword = lazy(() => import('@/pages/Auth/ForgetPassword'));
-const VerifyOTP = lazy(() => import('@/pages/Auth/VerifyOTP'));
-const ResetPassword = lazy(() => import('@/pages/Auth/ResetPassword'));
-const AdminDashboard = lazy(() => import('@/pages/Admin/Dashboard'));
-const AdminUsers = lazy(() => import('@/pages/Admin/Users'));
+const HomePage = lazy(() => import('@/pages/public/homePage'));
+const AboutPage = lazy(() => import('@/pages/public/aboutPage'));
+const ContactPage = lazy(() => import('@/pages/public/contactPage'));
+const Login = lazy(() => import('@/pages/auth/Login'));
+const Register = lazy(() => import('@/pages/auth/Register'));
+const ForgetPassword = lazy(() => import('@/pages/auth/ForgetPassword'));
+const VerifyOTP = lazy(() => import('@/pages/auth/VerifyOTP'));
+const ResetPassword = lazy(() => import('@/pages/auth/ResetPassword'));
+const AdminDashboard = lazy(() => import('@/pages/admin/dashboard'));
+const AdminUsers = lazy(() => import('@/pages/admin/users'));
 const NotFound = lazy(() => import('@/pages/404'));
 const Unauth = lazy(() => import('@/pages/Unauth'));
 

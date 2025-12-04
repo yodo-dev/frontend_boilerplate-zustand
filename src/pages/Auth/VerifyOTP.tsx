@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useVerifyOTPMutation } from '@/services/authService';
 import { validateVerifyOTPForm } from '@/utils/validationSchemas';
 import { Button, FormInput } from '@/components';
-import { useToastContext } from '@/components/Toast/ToastProvider';
+import { useToastContext } from '@/components/toast/ToastProvider';
 
 const VerifyOTP: React.FC = () => {
     const [verifyOTP, { isLoading }] = useVerifyOTPMutation();

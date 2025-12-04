@@ -14,12 +14,12 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 # Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env*.local
+# .env
+# .env.local
+# .env.development.local
+# .env.test.local
+# .env.production.local
+# .env*.local
 
 # Logs
 logs
@@ -192,9 +192,10 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
+# .env - REMOVED: Now tracked in git (WARNING: Contains sensitive data)
 .env.*
 !.env.example
+!.env
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache

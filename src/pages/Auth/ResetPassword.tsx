@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useResetPasswordMutation } from '@/services/authService';
 import { validateResetPasswordForm } from '@/utils/validationSchemas';
 import { Button, FormInput } from '@/components';
-import { useToastContext } from '@/components/Toast/ToastProvider';
+import { useToastContext } from '@/components/toast/ToastProvider';
 
 const ResetPassword: React.FC = () => {
     const [resetPassword, { isLoading }] = useResetPasswordMutation();

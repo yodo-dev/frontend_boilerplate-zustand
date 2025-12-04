@@ -5,7 +5,7 @@ import '@/styles/index.css';
 import { Provider } from 'react-redux';
 import { store, persistor } from '@/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import { ToastProvider } from '@/components/Toast';
+import { ToastProvider } from '@/components/toast';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Suspense>

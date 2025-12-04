@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForgetPasswordMutation } from '@/services/authService';
 import { validateForgetPasswordForm } from '@/utils/validationSchemas';
 import { Button, FormInput } from '@/components';
-import { useToastContext } from '@/components/Toast/ToastProvider';
+import { useToastContext } from '@/components/toast/ToastProvider';
 
 const ForgetPassword: React.FC = () => {
     const [forgetPassword, { isLoading }] = useForgetPasswordMutation();
