@@ -58,6 +58,15 @@ A modern, production-ready React boilerplate built with TypeScript, Vite, Redux 
 - Loading skeletons
 - Responsive layouts (Public & Admin)
 
+### Data Visualization & Calendar
+- **Recharts** - Powerful charting library for React
+  - Line charts, bar charts, pie charts, and more
+  - Responsive and customizable
+- **FullCalendar** - Full-featured calendar component
+  - Day grid view
+  - Event management
+  - Customizable and extensible
+
 ### Developer Experience
 - **ESLint v9** - Code quality and style enforcement
 - **TypeScript** - Full type safety
@@ -110,11 +119,11 @@ The application will open at `http://localhost:5173`
 src/
 ├── assets/          # Icons, images, SVG icons
 ├── components/      # Reusable UI components
-│   ├── Form/       # Form components
-│   ├── UI/         # UI components (Button, Card, etc.)
-│   ├── Table/      # Data table components
-│   ├── Toast/      # Toast notification system
-│   └── Skeletons/  # Loading skeletons
+│   ├── form/       # Form components
+│   ├── ui/         # UI components (Button, Card, etc.)
+│   ├── table/      # Data table components
+│   ├── toast/      # Toast notification system
+│   └── skeletons/  # Loading skeletons
 ├── hooks/          # Custom React hooks
 ├── layouts/        # Layout components
 │   ├── AdminLayout/
@@ -286,6 +295,48 @@ RTK Query services for:
 - User management (`userService.ts`)
 - Admin operations (`adminService.ts`)
 
+## 📊 Data Visualization Examples
+
+### Using Recharts
+```typescript
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
+const data = [
+  { name: 'Jan', value: 400 },
+  { name: 'Feb', value: 300 },
+  { name: 'Mar', value: 200 },
+];
+
+<ResponsiveContainer width="100%" height={300}>
+  <LineChart data={data}>
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis dataKey="name" />
+    <YAxis />
+    <Tooltip />
+    <Legend />
+    <Line type="monotone" dataKey="value" stroke="#8884d8" />
+  </LineChart>
+</ResponsiveContainer>
+```
+
+### Using FullCalendar
+```typescript
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+
+const events = [
+  { title: 'Meeting', start: '2025-01-15' },
+  { title: 'Conference', start: '2025-01-20' },
+];
+
+<FullCalendar
+  plugins={[dayGridPlugin]}
+  initialView="dayGridMonth"
+  events={events}
+  height="auto"
+/>
+```
+
 ## 🚨 Error Handling
 
 - **Error Boundary**: Catches React component errors
@@ -308,6 +359,12 @@ RTK Query services for:
 ### Forms
 - formik
 - react-select
+
+### Data Visualization & Calendar
+- recharts - Charting library for React
+- @fullcalendar/react - Full-featured calendar component
+- @fullcalendar/core - FullCalendar core
+- @fullcalendar/daygrid - Day grid view plugin
 
 ### Utilities
 - dateformat
