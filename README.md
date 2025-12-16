@@ -1,6 +1,6 @@
-# Frontend Boilerplate - Redux Toolkit
+# Frontend Boilerplate - Zustand & TanStack Query
 
-A modern, production-ready React boilerplate built with TypeScript, Vite, Redux Toolkit, and Tailwind CSS v4. This boilerplate provides a solid foundation for building scalable React applications with authentication, state management, form handling, and more.
+A modern, production-ready React boilerplate built with TypeScript, Vite, Zustand, TanStack Query, and Tailwind CSS v4. This boilerplate provides a solid foundation for building scalable React applications with authentication, state management, form handling, and more.
 
 ## 🚀 Features
 
@@ -9,13 +9,14 @@ A modern, production-ready React boilerplate built with TypeScript, Vite, Redux 
 - **TypeScript 5.6** - Type-safe development
 - **Vite 5.4** - Lightning-fast build tool and dev server
 - **Tailwind CSS 4.0** - Utility-first CSS framework
-- **Redux Toolkit 2.2** - Modern Redux with RTK Query
+- **Zustand 5.0** - Lightweight state management
+- **TanStack Query 5.59** - Powerful data fetching and caching
 - **React Router v6** - Declarative routing with lazy loading
 
 ### State Management
-- **Redux Toolkit** - Simplified Redux with best practices
-- **Redux Persist** - Persist user data (not tokens) to localStorage
-- **RTK Query** - Powerful data fetching and caching
+- **Zustand** - Simple, lightweight state management with minimal boilerplate
+- **Zustand Persist** - Persist user data (not tokens) to localStorage
+- **TanStack Query** - Powerful data fetching, caching, and synchronization
 - **In-Memory Token Management** - Secure access token storage in JavaScript memory
 
 ### Authentication
@@ -58,10 +59,7 @@ A modern, production-ready React boilerplate built with TypeScript, Vite, Redux 
 - Loading skeletons
 - Responsive layouts (Public & Admin)
 
-### Data Visualization & Calendar
-- **Recharts** - Powerful charting library for React
-  - Line charts, bar charts, pie charts, and more
-  - Responsive and customizable
+### Calendar
 - **FullCalendar** - Full-featured calendar component
   - Day grid view
   - Event management
@@ -133,11 +131,13 @@ src/
 │   ├── Auth/       # Authentication pages
 │   ├── Admin/      # Admin pages
 │   └── Public/     # Public pages
-├── redux/          # Redux store and slices
-│   ├── api/        # RTK Query API setup
-│   └── slices/     # Redux slices
+├── stores/         # Zustand stores
+│   ├── authStore.ts    # Authentication state
+│   └── userStore.ts    # User state
 ├── routes/         # Route configuration
 ├── services/       # API service definitions
+├── lib/            # Library configurations
+│   └── queryClient.ts  # TanStack Query client
 ├── styles/         # Global styles
 ├── types/          # TypeScript type definitions
 └── utils/          # Utility functions
@@ -289,35 +289,47 @@ ESLint v9 with flat config format, enforcing:
 - `useModal` - Modal state management
 - `useResponsive` - Responsive breakpoint detection
 
+### State Management (Zustand)
+```typescript
+import { useAuthStore } from '@/stores/authStore';
+
+// In component
+const { isLoggedIn, user, loggedIn, userLogout } = useAuthStore();
+
+// Login
+loggedIn({ user: { name: 'John', email: 'john@example.com' } });
+
+// Logout
+userLogout();
+```
+
+### Data Fetching (TanStack Query)
+```typescript
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { authService } from '@/services/authService';
+
+// Query
+const { data, isLoading, error } = useQuery({
+  queryKey: ['user'],
+  queryFn: authService.getUser
+});
+
+// Mutation
+const mutation = useMutation({
+  mutationFn: authService.login,
+  onSuccess: (data) => {
+    // Handle success
+  }
+});
+```
+
 ### API Services
-RTK Query services for:
+Service definitions for:
 - Authentication (`authService.ts`)
 - User management (`userService.ts`)
 - Admin operations (`adminService.ts`)
 
-## 📊 Data Visualization Examples
-
-### Using Recharts
-```typescript
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
-const data = [
-  { name: 'Jan', value: 400 },
-  { name: 'Feb', value: 300 },
-  { name: 'Mar', value: 200 },
-];
-
-<ResponsiveContainer width="100%" height={300}>
-  <LineChart data={data}>
-    <CartesianGrid strokeDasharray="3 3" />
-    <XAxis dataKey="name" />
-    <YAxis />
-    <Tooltip />
-    <Legend />
-    <Line type="monotone" dataKey="value" stroke="#8884d8" />
-  </LineChart>
-</ResponsiveContainer>
-```
+## 📅 Calendar Examples
 
 ### Using FullCalendar
 ```typescript
@@ -349,7 +361,8 @@ const events = [
 ### Core
 - react, react-dom
 - react-router-dom
-- @reduxjs/toolkit, react-redux, redux-persist
+- zustand (state management)
+- @tanstack/react-query, @tanstack/react-query-devtools (data fetching)
 
 ### UI & Styling
 - tailwindcss (v4)
@@ -360,8 +373,7 @@ const events = [
 - formik
 - react-select
 
-### Data Visualization & Calendar
-- recharts - Charting library for React
+### Calendar
 - @fullcalendar/react - Full-featured calendar component
 - @fullcalendar/core - FullCalendar core
 - @fullcalendar/daygrid - Day grid view plugin

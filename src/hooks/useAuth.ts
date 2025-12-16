@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useAuthStore } from '@/stores/authStore';
 
 export type AuthState = {
   isLoggedIn: boolean;
@@ -7,7 +7,6 @@ export type AuthState = {
 };
 
 export const useAuth = () => {
-  const { isLoggedIn, user, role } = useSelector((s: { auth: AuthState }) => s.auth);
+  const { isLoggedIn, user, role } = useAuthStore();
   return { isLoggedIn, user, role };
 };
-

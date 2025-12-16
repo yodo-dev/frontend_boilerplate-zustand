@@ -1,13 +1,27 @@
-import { splitApi } from '@/redux/api/splitApi';
+import { useQuery } from '@tanstack/react-query';
+import { apiRequest } from '@/lib/queryClient';
 
-export const adminService = splitApi.injectEndpoints({
-  endpoints: (builder) => ({
-    getDashboardStats: builder.query<any, void>({
-      query: () => ({ url: 'packing-list/summary' })
-    })
-  }),
-  overrideExisting: false
-});
+const getDashboardStatsApi = async () => {
+  return apiRequest('packing-list/summary');
+};
 
-export const { useGetDashboardStatsQuery, useLazyGetDashboardStatsQuery } = adminService;
+export const useGetDashboardStatsQuery = (enabled: boolean = true) => {
+  return useQuery({
+    queryKey: ['dashboardStats'],
+    queryFn: getDashboardStatsApi,
+    enabled,
+  });
+};
 
+export const useLazyGetDashboardStatsQuery = () => {
+  const query = useQuery({
+    queryKey: ['dashboardStats'],
+    queryFn: getDashboardStatsApi,
+    enabled: false,
+  });
+  
+  return {
+    ...query,
+    fetchStats: () => query.refetch(),
+  };
+};

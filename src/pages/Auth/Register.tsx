@@ -7,13 +7,13 @@ import { Button, FormInput } from '@/components';
 import { useToastContext } from '@/components/toast/ToastProvider';
 
 const Register: React.FC = () => {
-  const [register, { isLoading }] = useRegisterMutation();
+  const registerMutation = useRegisterMutation();
   const navigate = useNavigate();
   const toast = useToastContext();
 
   const handleSubmit = async (values: { name: string; email: string; password: string }) => {
     try {
-      await register(values).unwrap();
+      await registerMutation.mutateAsync(values);
       toast.success('Registration successful! Please login to continue.');
       navigate('/login');
     } catch (error: any) {
@@ -72,9 +72,9 @@ const Register: React.FC = () => {
               animation="sweep"
               size="lg"
               fullWidth
-              loading={isLoading}
-              disabled={isLoading}>
-              {isLoading ? 'Creating account...' : 'Sign Up'}
+              loading={registerMutation.isPending}
+              disabled={registerMutation.isPending}>
+              {registerMutation.isPending ? 'Creating account...' : 'Sign Up'}
             </Button>
 
             <div className="text-center text-sm text-gray-600">

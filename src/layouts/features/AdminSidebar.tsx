@@ -1,9 +1,8 @@
 import React, { memo, useMemo, useCallback } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { useAuth } from '@/hooks/useAuth';
+import { useAuthStore } from '@/stores/authStore';
 import { Home, Users } from '@/assets/icons';
-import { userLogout } from '@/redux/slices/authSlice';
 import { useLogoutMutation } from '@/services/authService';
 import { clearAccessToken } from '@/utils/tokenMemory';
 
@@ -12,8 +11,8 @@ export type AdminSidebarProps = { isOpen: boolean; onClose: () => void };
 const AdminSidebar: React.FC<AdminSidebarProps> = memo(({ isOpen, onClose }) => {
     const { role, user } = useAuth();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const [logoutApi] = useLogoutMutation();
+    const { userLogout } = useAuthStore();
+    const logoutMutation = useLogoutMutation();
     const links = useMemo(() => {
         const base = [{ to: '/admin', label: 'Dashboard', icon: <Home size={20} /> }];
         if (role === 'admin' || role === 'manager') {
@@ -25,19 +24,19 @@ const AdminSidebar: React.FC<AdminSidebarProps> = memo(({ isOpen, onClose }) => 
     const logout = useCallback(async () => {
         try {
             // Call logout API to clear server-side refresh token cookie
-            await logoutApi().unwrap();
+            await logoutMutation.mutateAsync();
         } catch (error) {
             // Continue with logout even if API call fails
             console.error('Logout API error:', error);
         } finally {
             // Clear in-memory access token
             clearAccessToken();
-            // Clear user state from redux
-            dispatch(userLogout());
+            // Clear user state from Zustand
+            userLogout();
             // Navigate to login
             navigate('/login');
         }
-    }, [dispatch, navigate, logoutApi]);
+    }, [navigate, logoutMutation, userLogout]);
 
     return (
         <aside
@@ -80,5 +79,3 @@ const AdminSidebar: React.FC<AdminSidebarProps> = memo(({ isOpen, onClose }) => 
 });
 
 export default AdminSidebar;
-
-

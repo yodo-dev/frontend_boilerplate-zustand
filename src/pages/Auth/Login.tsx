@@ -2,22 +2,21 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '@/services/authService';
-import { useDispatch } from 'react-redux';
-import { loggedIn } from '@/redux/slices/authSlice';
+import { useAuthStore } from '@/stores/authStore';
 import { setAccessToken } from '@/utils/tokenMemory';
 import { validateLoginForm } from '@/utils/validationSchemas';
 import { Button, FormInput } from '@/components';
 import { useToastContext } from '@/components/toast/ToastProvider';
 
 const Login: React.FC = () => {
-  const [login, { isLoading }] = useLoginMutation();
-  const dispatch = useDispatch();
+  const loginMutation = useLoginMutation();
+  const { loggedIn } = useAuthStore();
   const navigate = useNavigate();
   const toast = useToastContext();
 
   const handleSubmit = async (values: { email: string; password: string }) => {
     try {
-      const res: any = await login(values).unwrap();
+      const res: any = await loginMutation.mutateAsync(values);
       const accessToken = res?.payload?.accessToken || res?.accessToken || res?.token;
       const user = res?.payload?.user || res?.user;
 
@@ -25,7 +24,7 @@ const Login: React.FC = () => {
         setAccessToken(accessToken);
       }
 
-      dispatch(loggedIn({ user }));
+      loggedIn({ user });
       toast.success('Login successful!');
       navigate('/admin');
     } catch (error: any) {
@@ -78,8 +77,8 @@ const Login: React.FC = () => {
               </Link>
             </div>
 
-            <Button type="submit" disabled={isLoading} fullWidth>
-              {isLoading ? 'Logging in...' : 'Login'}
+            <Button type="submit" disabled={loginMutation.isPending} fullWidth>
+              {loginMutation.isPending ? 'Logging in...' : 'Login'}
             </Button>
 
             <div className="text-center text-sm text-gray-600">

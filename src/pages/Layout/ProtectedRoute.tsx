@@ -10,4 +10,3 @@ const ProtectedRoute: React.FC<{ roles?: string[] }> = ({ roles }) => {
 };
 
 export default ProtectedRoute;
-

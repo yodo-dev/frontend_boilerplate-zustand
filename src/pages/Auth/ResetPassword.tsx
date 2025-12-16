@@ -7,7 +7,7 @@ import { Button, FormInput } from '@/components';
 import { useToastContext } from '@/components/toast/ToastProvider';
 
 const ResetPassword: React.FC = () => {
-    const [resetPassword, { isLoading }] = useResetPasswordMutation();
+    const resetPasswordMutation = useResetPasswordMutation();
     const navigate = useNavigate();
     const location = useLocation();
     const toast = useToastContext();
@@ -24,7 +24,7 @@ const ResetPassword: React.FC = () => {
         }
 
         try {
-            await resetPassword({ email, otp, password: values.password }).unwrap();
+            await resetPasswordMutation.mutateAsync({ email, otp, password: values.password });
             toast.success('Password reset successfully! Please login with your new password.');
             navigate('/login');
         } catch (error: any) {
@@ -70,8 +70,8 @@ const ResetPassword: React.FC = () => {
                             error={touched.confirmPassword && errors.confirmPassword ? errors.confirmPassword : undefined}
                         />
 
-                        <Button type="submit" disabled={isLoading} fullWidth>
-                            {isLoading ? 'Resetting password...' : 'Reset Password'}
+                        <Button type="submit" disabled={resetPasswordMutation.isPending} fullWidth>
+                            {resetPasswordMutation.isPending ? 'Resetting password...' : 'Reset Password'}
                         </Button>
 
                         <div className="text-center text-sm text-gray-600">
@@ -87,4 +87,3 @@ const ResetPassword: React.FC = () => {
 };
 
 export default ResetPassword;
-

@@ -7,7 +7,7 @@ import { Button, FormInput } from '@/components';
 import { useToastContext } from '@/components/toast/ToastProvider';
 
 const ForgetPassword: React.FC = () => {
-    const [forgetPassword, { isLoading }] = useForgetPasswordMutation();
+    const forgetPasswordMutation = useForgetPasswordMutation();
     const [emailSent, setEmailSent] = useState(false);
     const [userEmail, setUserEmail] = useState('');
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ const ForgetPassword: React.FC = () => {
 
     const handleSubmit = async (values: { email: string }) => {
         try {
-            await forgetPassword({ email: values.email }).unwrap();
+            await forgetPasswordMutation.mutateAsync({ email: values.email });
             setUserEmail(values.email);
             setEmailSent(true);
             toast.success('OTP has been sent to your email address.');
@@ -80,8 +80,8 @@ const ForgetPassword: React.FC = () => {
                             error={touched.email && errors.email ? errors.email : undefined}
                         />
 
-                        <Button type="submit" disabled={isLoading} fullWidth>
-                            {isLoading ? 'Sending OTP...' : 'Send OTP'}
+                        <Button type="submit" disabled={forgetPasswordMutation.isPending} fullWidth>
+                            {forgetPasswordMutation.isPending ? 'Sending OTP...' : 'Send OTP'}
                         </Button>
 
                         <div className="text-center text-sm text-gray-600">
@@ -98,4 +98,3 @@ const ForgetPassword: React.FC = () => {
 };
 
 export default ForgetPassword;
-

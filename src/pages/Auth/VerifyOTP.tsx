@@ -7,7 +7,7 @@ import { Button, FormInput } from '@/components';
 import { useToastContext } from '@/components/toast/ToastProvider';
 
 const VerifyOTP: React.FC = () => {
-    const [verifyOTP, { isLoading }] = useVerifyOTPMutation();
+    const verifyOTPMutation = useVerifyOTPMutation();
     const navigate = useNavigate();
     const location = useLocation();
     const toast = useToastContext();
@@ -23,7 +23,7 @@ const VerifyOTP: React.FC = () => {
         }
 
         try {
-            await verifyOTP({ email, otp: values.otp }).unwrap();
+            await verifyOTPMutation.mutateAsync({ email, otp: values.otp });
             toast.success('OTP verified successfully!');
             navigate('/reset-password', { state: { email, otp: values.otp } });
         } catch (error: any) {
@@ -61,8 +61,8 @@ const VerifyOTP: React.FC = () => {
                             maxLength={6}
                         />
 
-                        <Button type="submit" disabled={isLoading} fullWidth>
-                            {isLoading ? 'Verifying...' : 'Verify OTP'}
+                        <Button type="submit" disabled={verifyOTPMutation.isPending} fullWidth>
+                            {verifyOTPMutation.isPending ? 'Verifying...' : 'Verify OTP'}
                         </Button>
 
                         <div className="text-center text-sm text-gray-600">
@@ -85,4 +85,3 @@ const VerifyOTP: React.FC = () => {
 };
 
 export default VerifyOTP;
-
