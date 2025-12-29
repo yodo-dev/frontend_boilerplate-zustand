@@ -110,9 +110,6 @@ tmp/
 # yarn.lock
 # pnpm-lock.yaml
 
-# Redux DevTools Extension
-redux-devtools-extension/
-
 # Local Netlify folder
 .netlify
 
