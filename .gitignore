@@ -110,9 +110,6 @@ tmp/
 # yarn.lock
 # pnpm-lock.yaml
 
-# Redux DevTools Extension
-redux-devtools-extension/
-
 # Local Netlify folder
 .netlify
 
@@ -193,7 +190,6 @@ web_modules/
 
 # dotenv environment variable files
 # .env - REMOVED: Now tracked in git (WARNING: Contains sensitive data)
-.env.*
 !.env.example
 !.env
 
@@ -264,3 +260,4 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+config.bat
